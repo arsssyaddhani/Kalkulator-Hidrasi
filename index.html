@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Hidrasi 💧</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-drop">💧</span>
+                <span class="logo-text">Kalkulator Hidrasi</span>
+            </div>
+            <div class="theme-switcher">
+                <select id="themeSelect" aria-label="Pilih Tema">
+                    <option value="system">⚙️ System</option>
+                    <option value="light">☀️ Terang</option>
+                    <option value="dark">🌙 Gelap</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- FORM INPUT (Selalu terlihat) -->
+        <div class="step-content" id="inputForm">
+            <div class="step-header">
+                <span class="step-badge">Profil Kamu</span>
+                <h1 class="step-title">Mari Hitung Kebutuhan Air Minummu</h1>
+                <p class="step-subtitle">Lengkapi data di bawah ini untuk mendapatkan rekomendasi hidrasi harian yang akurat.</p>
+            </div>
+
+            <!-- Gender -->
+            <div class="gender-grid">
+                <div class="gender-card" data-gender="male" role="button" tabindex="0" aria-pressed="false">
+                    <span class="gender-icon">🧑</span>
+                    <span class="gender-label">Laki-laki</span>
+                    <span class="gender-check">✓</span>
+                </div>
+                <div class="gender-card" data-gender="female" role="button" tabindex="0" aria-pressed="false">
+                    <span class="gender-icon">👩</span>
+                    <span class="gender-label">Perempuan</span>
+                    <span class="gender-check">✓</span>
+                </div>
+            </div>
+
+            <!-- Sliders -->
+            <div class="slider-card">
+                <div class="slider-label-row">
+                    <span class="slider-emoji"> </span>
+                    <span class="slider-label-text">Usia</span>
+                </div>
+                <div class="slider-control-row">
+                    <button class="adj-btn" data-target="age" data-dir="-1" aria-label="Kurangi usia">−</button>
+                    <div class="slider-display-box">
+                        <span class="slider-num" id="ageDisplay">25</span>
+                        <span class="slider-unit">tahun</span>
+                    </div>
+                    <button class="adj-btn" data-target="age" data-dir="1" aria-label="Tambah usia">+</button>
+                </div>
+                <div class="slider-track-wrap">
+                    <input type="range" id="ageSlider" class="range-input" min="5" max="80" step="1" value="25">
+                </div>
+                <div class="slider-minmax"><span>5 thn</span><span>80 thn</span></div>
+            </div>
+
+            <div class="slider-card">
+                <div class="slider-label-row">
+                    <span class="slider-emoji"></span>
+                    <span class="slider-label-text">Berat Badan</span>
+                </div>
+                <div class="slider-control-row">
+                    <button class="adj-btn" data-target="weight" data-dir="-1" aria-label="Kurangi berat">−</button>
+                    <div class="slider-display-box">
+                        <span class="slider-num" id="weightDisplay">60</span>
+                        <span class="slider-unit">kg</span>
+                    </div>
+                    <button class="adj-btn" data-target="weight" data-dir="1" aria-label="Tambah berat">+</button>
+                </div>
+                <div class="slider-track-wrap">
+                    <input type="range" id="weightSlider" class="range-input" min="10" max="150" step="1" value="60">
+                </div>
+                <div class="slider-minmax"><span>10 kg</span><span>150 kg</span></div>
+            </div>
+
+            <div class="slider-card">
+                <div class="slider-label-row">
+                    <span class="slider-emoji"></span>
+                    <span class="slider-label-text">Tinggi Badan</span>
+                </div>
+                <div class="slider-control-row">
+                    <button class="adj-btn" data-target="height" data-dir="-1" aria-label="Kurangi tinggi">−</button>
+                    <div class="slider-display-box">
+                        <span class="slider-num" id="heightDisplay">165</span>
+                        <span class="slider-unit">cm</span>
+                    </div>
+                    <button class="adj-btn" data-target="height" data-dir="1" aria-label="Tambah tinggi">+</button>
+                </div>
+                <div class="slider-track-wrap">
+                    <input type="range" id="heightSlider" class="range-input" min="80" max="220" step="1" value="165">
+                </div>
+                <div class="slider-minmax"><span>80 cm</span><span>220 cm</span></div>
+            </div>
+
+            <!-- Activity -->
+            <div class="step-header" style="margin-top: 12px;">
+                <span class="step-badge">Aktivitas</span>
+                <h2 class="step-title" style="font-size: 1.4rem;">Seberapa aktif kamu?</h2>
+            </div>
+            <div class="activity-grid">
+                <div class="activity-card" data-activity="sedentary" role="button" tabindex="0" aria-pressed="false">
+                    <span class="activity-icon">🛋️</span>
+                    <span class="activity-name">Tidak Aktif</span>
+                    <span class="activity-desc">Malas</span>
+                    <span class="activity-factor">×1.0</span>
+                </div>
+                <div class="activity-card" data-activity="light" role="button" tabindex="0" aria-pressed="false">
+                    <span class="activity-icon">🚶</span>
+                    <span class="activity-name">Ringan</span>
+                    <span class="activity-desc">Olahraga ringan 1–3 hari/minggu</span>
+                    <span class="activity-factor">×1.1</span>
+                </div>
+                <div class="activity-card" data-activity="moderate" role="button" tabindex="0" aria-pressed="false">
+                    <span class="activity-icon">🏃</span>
+                    <span class="activity-name">Sedang</span>
+                    <span class="activity-desc">Olahraga sedang 3–5 hari/minggu</span>
+                    <span class="activity-factor">×1.3</span>
+                </div>
+                <div class="activity-card" data-activity="active" role="button" tabindex="0" aria-pressed="false">
+                    <span class="activity-icon">🏋️</span>
+                    <span class="activity-name">Aktif</span>
+                    <span class="activity-desc">Olahraga berat 6–7 hari/minggu</span>
+                    <span class="activity-factor">×1.5</span>
+                </div>
+            </div>
+
+            <!-- Tombol Hasil Utama -->
+            <button id="btnHitung" class="btn-primary" style="margin-top: 12px;">
+                💧 Hitung Kebutuhan Hidrasi
+            </button>
+        </div>
+
+        <!-- HASIL (Awalnya tersembunyi) -->
+        <div id="resultCard" class="result-card hidden" style="margin-top: 32px;">
+            <div class="result-wave-header">
+                <div class="wave-shape"></div>
+            </div>
+            <div class="result-body">
+                <div class="result-emoji-wrap">💧</div>
+                <h2 class="result-title">Kebutuhan Hidrasimu</h2>
+                <p class="result-subtitle" id="resultSubtitle">Berdasarkan profil yang kamu masukkan</p>
+                
+                <div class="result-main-number">
+                    <span class="result-liter" id="resultLiter">0</span>
+                    <span class="result-liter-unit">liter / hari</span>
+               3</div>
+
+                <div class="result-pills">
+                    <div class="result-pill">
+                        <span class="pill-value" id="resultMl">0</span>
+                        <span class="pill-label">ml per hari</span>
+                    </div>
+                    <div class="result-pill-divider"></div>
+                    <div class="result-pill">
+                        <span class="pill-value" id="resultGlasses">0</span>
+                        <span class="pill-label">gelas (250 ml)</span>
+                    </div>
+                </div>
+
+                <div class="breakdown-section">
+                    <div class="breakdown-title">Rincian Kebutuhan</div>
+                    <div class="breakdown-row">
+                        <div class="breakdown-item">
+                            <span class="breakdown-icon">📅</span>
+                            <span class="breakdown-label">Per Minggu</span>
+                            <span class="breakdown-value" id="resultWeekly">0 L</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-icon">🗓️</span>
+                            <span class="breakdown-label">Per Bulan</span>
+                            <span class="breakdown-value" id="resultMonthly">0 L</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-icon">📆</span>
+                            <span class="breakdown-label">Per Tahun</span>
+                            <span class="breakdown-value" id="resultYearly">0 L</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-tags">
+                    <span class="profile-tag" id="tagGender"> —</span>
+                    <span class="profile-tag" id="tagAge"> — tahun</span>
+                    <span class="profile-tag" id="tagWeight"> — kg</span>
+                    <span class="profile-tag" id="tagHeight"> — cm</span>
+                    <span class="profile-tag" id="tagActivity"> —</span>
+                </div>
+
+                <p class="result-disclaimer">
+                    * Perhitungan berdasarkan rumus: Berat (kg) × 35 ml × faktor aktivitas. Konsultasikan dengan dokter untuk kondisi kesehatan tertentu.
+                </p>
+
+                <div class="result-actions">
+                    <button id="btnDownloadPdf" class="btn-download">
+                        📄 Download PDF
+                    </button>
+                    
+                    <div class="share-box">
+                        <div class="share-heading">Bagikan ke:</div>
+                        <div class="share-row">
+                            <button id="btnWa" class="btn-share share-wa">
+                                <span> </span>
+                                <span>WhatsApp</span>
+                            </button>
+                            <button id="btnX" class="btn-share share-x">
+                                <span> </span>
+                                <span>X / Twitter</span>
+                            </button>
+                            <button id="btnThreads" class="btn-share share-threads">
+                                <span></span>
+                                <span>Threads</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button id="btnRestart" class="btn-restart">
+                        ↩ Hitung Ulang
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
